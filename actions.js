@@ -1,0 +1,130 @@
+var {Page, Comment} = require('./model');
+var log = require('ringo/logging').getLogger(module.id);
+var {read, write, join, list} = require('fs');
+var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/webapp/fileupload');
+// yeah baby
+include('./response');
+
+export('files', 'comment', 'edit', 'servePage');
+
+var FILES_PATH = module.resolve('./public/files');
+var FILES_URL = '/files/';
+
+/**
+ * 'render' the template. replaces {{{key}}} with JSON.stringify(data[key])
+ */
+function render(template, data) {
+   var tmpl = read(module.resolve('./skins/' + template));
+   for (var key in data) {
+      tmpl = tmpl.replace('{{{' + key + '}}}', JSON.stringify(data[key]));
+   }
+   return tmpl;
+};
+
+/**
+ * file upload helper. actually writes the file found in request into
+ * file directory.
+ */
+function uploadFile(request, path) {
+   var file = request.params['nocms-file'];
+   if (file) {
+      var name = file.filename;
+      write(join(FILES_PATH, name), file.value);
+      log.info('uploaded ', name);
+   }
+   return redirect('/' + path);
+};
+
+/**
+ * show file list; upload file
+ */
+function files(request) {
+   if (request.isPost) {
+      uploadFile(request);
+      return redirect('/!files');
+   }
+   var files = list(FILES_PATH).map(function(file) {
+      return {
+         name: file,
+         url: FILES_URL + file
+      }
+   })
+
+   files.sort(function(a,b) {
+      return a.name > b.name ? 1 : -1;
+   });
+   var $files = render('files', {
+      FILES: files
+   });
+   return respond($files);
+};
+
+/**
+ * create comment
+ */
+function comment(request, path) {
+   if (request.isPost) {
+      var page = Page.getByPath(path);
+      var data = {
+         text: request.params['nocms-text'],
+         author: request.params['nocms-author'],
+         page: page,
+         created: new Date()
+      };
+      Comment.create(data);
+      return redirect('/' + path);
+   }
+   return notfound();
+};
+
+/**
+ * show page editor; update page; create page;
+ */
+function edit(request, path) {
+   if (request.isPost) {
+      var data = {
+         title: request.params['nocms-title'],
+         text: request.params['nocms-text']
+      };
+      data.path = path;
+      data.updated = new Date();
+      Page.create(data) || Page.update(data);
+
+      var deleteIds = request.params['nocmscommentdelete'];
+      Comment.bulkRemove(deleteIds);
+
+      var redir = request.params['nocms-redirect'];
+      if (redir && redir.length) {
+         return redirect(redir);
+      }
+      return redirect('/' + path);
+   }
+
+   var page = Page.getByPath(path) || null;
+   var $edit = render('edit', {
+      PAGE: page && page.serialize() || {path: path}
+   });
+   return respond($edit);
+};
+
+/**
+ * Serve a page
+ */
+function servePage(request, path) {
+   var page = Page.getByPath(path);
+   if (!page) {
+      return notfound();
+   }
+   var recentPages = Page.query().orderBy('created desc').limit(10).select();
+   var recent = {
+      pages: []
+   };
+   recentPages.forEach(function(rp) {
+      recent.pages.push(rp.serializeMini());
+   });
+   var $page = render('page', {
+      PAGE: page.serialize(),
+      RECENT: recent
+   });
+   return respond($page);
+};

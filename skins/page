@@ -1,0 +1,65 @@
+<!doctype html>
+<head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="/static/base.css" />
+   <link rel="stylesheet" href="/static/page.css" />
+   <title></title>
+</head>
+
+<body>
+   <header>
+      <h1 id="nocms-title">Loading...</h1>
+   </header>
+
+   <div id="nocms-menu-wrapper">
+      <h3><a href="/">Home</a></h3>
+      <ul id="nocms-recent-pages"></ul>
+   </div>
+
+   <div id="nocms-text">
+         <noscript>
+         <h1>NO JAVASCRIPT??</h1>
+         <h1>YOU GOTTA BE KIDDING ME...</h1>
+         </noscript>
+
+   </div>
+
+   <div id="nocms-page-meta"></div>
+
+   <div id="nocms-button-comment"><button>comment</button></div>
+
+   <div id="nocms-comments-wrapper">
+      <h3>Comments</h3>
+      <form id="nocms-form-comment" method="POST" action="./!comment">
+         <input name="nocms-author" type="text" size="30" placeholder="Your name">
+         <br/>
+         <textarea name="nocms-text" rows=5 cols=40 placeholder="Your comment"></textarea>
+         <br/>
+         <input type="submit" name="post comment" value="post comment"/>
+      </form>
+      <div id="nocms-comments"></div>
+   </div>
+
+   <script src="/static/lib/jquery.js"></script>
+   <script src="/static/lib/jquery.tmpl.js"></script>
+   <script src="/static/lib/showdown.js"></script>
+   <script src="/static/page.js"></script>
+   <script type="text/json" id="nocms-json-page">
+   {{{PAGE}}}
+   </script>
+   <script type="text/json" id="nocms-json-recent">
+   {{{RECENT}}}
+   </script>
+   <script type="text/jquery-template" id="nocms-comment-template">
+      <p>
+         <q>${text}</q>
+         <br/> - ${author}
+      </p>
+   </script>
+   <script type="text/jquery-template" id="nocms-recent-page-template">
+      <li>
+         <a href="/${path}">${title}</a> ${created}
+      </li>
+   </script>
+</body>
+</html>

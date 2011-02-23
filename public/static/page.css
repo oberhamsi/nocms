@@ -1,0 +1,46 @@
+body {
+   max-width: 900px;
+}
+div#nocms-text, div#nocms-text-preview {
+   width: 60%;
+   max-width:500px;
+   background-color:#f4fffc;
+   border: 1px solid #cbfff1;
+   padding: 1em 1em 1em 1em;
+}
+div#nocms-comments > p > q {
+   margin: 0 0 1em -1em;
+}
+
+div#nocms-menu-wrapper {
+   float:right;
+   font-size:small;
+   line-height:115%;
+   color:#888;
+   background-color:#f4fffc;
+   padding: 0.1em 1em 1em 1em;
+}
+div#nocms-menu-wrapper a{
+   color:#666;
+}
+
+div#nocms-comments-wrapper {
+   color: #666;
+   font-size:small;
+   width:30%;
+   max-width:300px;
+}
+div#nocms-page-meta {
+   color: #666;
+   font-size:small;
+   color:#888;
+   padding: 0.5em 0.5em 0.5em 0;
+   font-family:monospace;
+   line-height: 100%;
+}
+
+ul#nocms-recent-pages {
+   list-style-type: none;
+   margin: 0em 0.5em 0.5em 0;
+   padding: 0;
+}

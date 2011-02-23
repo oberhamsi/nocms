@@ -1,0 +1,47 @@
+<!doctype html>
+<head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="/static/base.css" />
+   <link rel="stylesheet" href="/static/edit.css" />
+   <title></title>
+</head>
+
+<body>
+   <form id="nocms-form-page" method="POST">
+      <input type="hidden" id="nocms-redirect" name="nocms-redirect">
+      <h3 id="nocms-path"></h3>
+      <input id="nocms-title" name="nocms-title" type="text" size="50" placeholder="Title"/>
+      <br/>
+      <textarea id="nocms-text" name="nocms-text" cols=70 rows=30 placeholder="Page text in Markdown"></textarea>
+      <div id="nocms-text-preview"></div>
+
+      <br/>
+      <input type="submit" name="save" value="Save & exit" title="Press Ctrl + S to save without exiting."/>
+      &nbsp;&nbsp;&nbsp;
+      <input id="nocms-button-preview" type="submit" name="Update _p_review" value="Update preview" title="Press CTRL + P to update the preview."/>
+
+      <h3> Delete comments </h3>
+      <div id="nocms-comments">
+      </div>
+
+   </form>
+
+   <script src="/static/lib/jquery.js"></script>
+   <script src="/static/lib/jquery.tmpl.js"></script>
+   <script src="/static/lib/showdown.js"></script>
+   <script src="/static/edit.js"></script>
+   <script type="text/json" id="nocms-json-page">
+   {{{PAGE}}}
+   </script>
+   <script type="text/jquery-template" id="nocms-comment-template">
+      <p>
+         <input name="nocmscommentdelete[]" value="${_id}" type="checkbox" title="delete" type="Mark comment for deletion">delete
+         <br/>
+         <q>${text}</q>
+         <br/> by ${author}, ${created}
+         <hr/>
+      </p>
+   </script>
+
+</body>
+</html>

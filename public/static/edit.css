@@ -1,0 +1,8 @@
+div#nocms-text-preview {
+   float:right;
+   width: 60%;
+   max-width:500px;
+   background-color:#f4fffc;
+   border: 1px solid #cbfff1;
+   padding: 1em 1em 1em 1em;
+}

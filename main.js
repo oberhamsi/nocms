@@ -13,7 +13,6 @@ app.basicauth(/(.*)\!(edit|files)(.*)/, config.backend.username, config.backend.
 
 var actions = require('./actions');
 app.mount('/', function(request) {
-   // drop slahes
    var path = request.pathInfo;
    request.isPost = request.method.toLowerCase() === 'post';
 
@@ -24,6 +23,13 @@ app.mount('/', function(request) {
       path = matches[1];
       // remove trailing /
       path = path.substring(path.length-1) === '/' ? path.substring(0, path.length-1) : path;
+      // if search engine request: return canonical html now
+      // @see http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=174992
+      if (request.params._escaped_fragment_ !== undefined) {
+         return actions.serveCanonicalPage(request, path);
+      }
+
+
       var action = null;
       if (matches[2] && matches[2].length) {
          action = actions[matches[2]];
@@ -37,6 +43,7 @@ app.mount('/', function(request) {
          return error();
       }
    }
+   return notfound;
 });
 
 // Script run from command line

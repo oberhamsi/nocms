@@ -3,6 +3,7 @@
    <meta charset="utf-8">
    <link rel="stylesheet" href="/static/base.css" />
    <link rel="stylesheet" href="/static/page.css" />
+   <meta name="fragment" content="!">
    <title></title>
 </head>
 

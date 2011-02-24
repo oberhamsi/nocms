@@ -2,21 +2,22 @@ var {Page, Comment} = require('./model');
 var log = require('ringo/logging').getLogger(module.id);
 var {read, write, join, list} = require('fs');
 var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/webapp/fileupload');
-// yeah baby
-include('./response');
+var {redirect, respond, notfound} = require('./response');
+// FIXME could easily break without me noticing
+var showdown = require('./public/static/lib/showdown');
 
-export('files', 'comment', 'edit', 'servePage');
+export('files', 'comment', 'edit', 'servePage', 'serveCanonicalPage');
 
 var FILES_PATH = module.resolve('./public/files');
 var FILES_URL = '/files/';
 
 /**
- * 'render' the template. replaces {{{key}}} with JSON.stringify(data[key])
+ * 'render' the template. replaces {{{key}}} with data[key]
  */
 function render(template, data) {
    var tmpl = read(module.resolve('./skins/' + template));
    for (var key in data) {
-      tmpl = tmpl.replace('{{{' + key + '}}}', JSON.stringify(data[key]));
+      tmpl = tmpl.replace('{{{' + key + '}}}', data[key]);
    }
    return tmpl;
 };
@@ -54,7 +55,7 @@ function files(request) {
       return a.name > b.name ? 1 : -1;
    });
    var $files = render('files', {
-      FILES: files
+      FILES: JSON.stringify(files)
    });
    return respond($files);
 };
@@ -102,7 +103,7 @@ function edit(request, path) {
 
    var page = Page.getByPath(path) || null;
    var $edit = render('edit', {
-      PAGE: page && page.serialize() || {path: path}
+      PAGE: page && JSON.stringify(page.serialize()) || JSON.stringify({path: path})
    });
    return respond($edit);
 };
@@ -123,8 +124,25 @@ function servePage(request, path) {
       recent.pages.push(rp.serializeMini());
    });
    var $page = render('page', {
-      PAGE: page.serialize(),
-      RECENT: recent
+      PAGE: JSON.stringify(page.serialize()),
+      RECENT: JSON.stringify(recent)
    });
    return respond($page);
 };
+
+/**
+ * Serve page content in canonical html form
+ */
+function serveCanonicalPage(request, path) {
+   var page = Page.getByPath(path);
+   if (!page) {
+      return  notfound();
+   }
+   var converter = new showdown.Showdown.converter();
+   var text = converter.makeHtml(page.text);
+   var $page = render('page-canonical', {
+      TITLE: page.title,
+      TEXT: text
+   });
+   return respond($page);
+}

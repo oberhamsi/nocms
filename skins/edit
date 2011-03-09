@@ -13,7 +13,8 @@
       <input id="nocms-title" name="nocms-title" type="text" size="50" placeholder="Title"/>
       <br/>
       <textarea id="nocms-text" name="nocms-text" cols=70 rows=30 placeholder="Page text in Markdown"></textarea>
-      <div id="nocms-text-preview"></div>
+      <iframe id="nocms-preview" style="height:700px;width:60%;float:right;">
+      </iframe>
 
       <br/>
       <input type="submit" name="save" value="Save & exit" title="Press Ctrl + S to save without exiting."/>

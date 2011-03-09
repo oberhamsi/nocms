@@ -91,6 +91,8 @@ function edit(request, path) {
       data.updated = new Date();
       Page.create(data) || Page.update(data);
 
+      // FIXME ringo bug
+      // https://github.com/ringo/ringojs/issues#issue/126
       var deleteIds = request.params['nocmscommentdelete'];
       Comment.bulkRemove(deleteIds);
 

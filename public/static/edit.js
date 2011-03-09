@@ -15,14 +15,13 @@ $(document).ready(function() {
    $('#nocms-comments').append($comments);
 
    // preview UI
-   var converter = new Showdown.converter();
-   function renderPreview() {
-      var $text = converter.makeHtml($('#nocms-text').val());
-      $("#nocms-text-preview").html($text);
+
+   function updatePreview() {
+      $('#nocms-preview').attr('src', '/' + page.path);
    }
-   renderPreview();
+   updatePreview();
    $("#nocms-button-preview").click(function(event) {
-      renderPreview();
+      updatePreview();
       event.preventDefault();
    });
 
@@ -36,7 +35,7 @@ $(document).ready(function() {
             $('#nocms-form-page').submit();
             return false;
          } else if (key === 80) {
-            renderPreview();
+            updatePreview();
             return false;
          }
       }

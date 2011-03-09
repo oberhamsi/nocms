@@ -14,14 +14,21 @@ exports.middleware = function captcha(next, app) {
       /**
        * if question is set, it's answer is tested
        */
-      if (req.method.toLowerCase() === 'post' && req.session.data[Q]) {
+      // FIXME authorization easy to circument if you know what you need to do (set auth header)
+      if (!req.session.data.isAuthorized && req.method.toLowerCase() == 'post' && req.session.data[Q]) {
          var answer = req.params[A];
          if (!answer || typeof(answer) != 'string') {
             req.session.data[Q] = null;
             return badrequest();
          }
          var answer = answer.toLowerCase().trim();
-         var boolAnswer = answer === 'yes' ? true : false;
+         // weird switch statement to get cheap undef
+         var boolAnswer = {'yes': true,
+                           'no': false
+                          }[answer];
+         if (boolAnswer === undefined) {
+            return badrequest();
+         }
          var question = req.session.data[Q];
          if (QUESTIONS[question] === boolAnswer) {
             req.session.data[Q] = null;

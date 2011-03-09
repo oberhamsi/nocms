@@ -3,7 +3,7 @@ var log = require('ringo/logging').getLogger(module.id);
 
 var config = require('./config');
 var {error} = require('./response');
-var authMiddleware = require('./middleware');
+var authMiddleware = require('./basicauth');
 var captcha = require('./captcha');
 
 var app = exports.app = Application();

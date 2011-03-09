@@ -38,6 +38,7 @@ exports.middleware = function basicauth(next, app) {
                 var credentials = base64.decode(req.headers.authorization
                         .replace(/Basic /, '')).split(':');
                 if (strings.digest(credentials[1], 'sha1') === toAuth[credentials[0]]) {
+                    req.session.data.isAuthorized = true;
                     return next(req); // Authorization.
                 }
             }

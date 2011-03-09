@@ -7,7 +7,7 @@ var authMiddleware = require('./basicauth');
 var captcha = require('./captcha');
 
 var app = exports.app = Application();
-app.configure(authMiddleware, 'static', 'upload', 'params', 'session', captcha, 'mount');
+app.configure('session', authMiddleware, 'static', 'upload', 'params', captcha, 'mount');
 app.static(module.resolve('public'), 'static');
 // aut for paths containing ! and a secure action
 app.basicauth(/(.*)\!(edit|files)(.*)/, config.backend.username, config.backend.password_sha1);

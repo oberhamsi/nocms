@@ -2,14 +2,16 @@ var {Page, Comment} = require('./model');
 var log = require('ringo/logging').getLogger(module.id);
 var {read, write, join, list} = require('fs');
 var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/webapp/fileupload');
+
+var config = require('./config');
 var {redirect, respond, notfound} = require('./response');
 // FIXME could easily break without me noticing
 var showdown = require('./public/static/lib/showdown');
 
 export('files', 'comment', 'edit', 'servePage', 'serveCanonicalPage');
 
-var FILES_PATH = module.resolve('./public/files');
-var FILES_URL = '/files/';
+var FILES_PATH = config.files.uploadDirectory;
+var FILES_URL = config.files.baseUrl;
 
 /**
  * 'render' the template. replaces {{{key}}} with data[key]
@@ -27,7 +29,7 @@ function render(template, data) {
  * file directory.
  */
 function uploadFile(request, path) {
-   var file = request.params['nocms-file'];
+   var file = request.postParams['nocms-file'];
    if (file) {
       var name = file.filename;
       write(join(FILES_PATH, name), file.value);

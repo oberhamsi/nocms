@@ -6,7 +6,7 @@ var {error} = require('./response');
 var basicAuthWithRegex = require('./middleware');
 
 var app = exports.app = Application();
-app.configure(basicAuthWithRegex, 'static', 'params', 'mount', 'upload', 'render');
+app.configure(basicAuthWithRegex, 'static', 'upload', 'params', 'session', 'mount');
 app.static(module.resolve('public'), 'static');
 // aut for paths containing ! and a secure action
 app.basicauth(/(.*)\!(edit|files)(.*)/, config.backend.username, config.backend.password_sha1);
@@ -28,7 +28,6 @@ app.mount('/', function(request) {
       if (request.params._escaped_fragment_ !== undefined) {
          return actions.serveCanonicalPage(request, path);
       }
-
 
       var action = null;
       if (matches[2] && matches[2].length) {

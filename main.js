@@ -3,10 +3,11 @@ var log = require('ringo/logging').getLogger(module.id);
 
 var config = require('./config');
 var {error} = require('./response');
-var basicAuthWithRegex = require('./middleware');
+var authMiddleware = require('./middleware');
+var captcha = require('./captcha');
 
 var app = exports.app = Application();
-app.configure(basicAuthWithRegex, 'static', 'upload', 'params', 'session', 'mount');
+app.configure(authMiddleware, 'static', 'upload', 'params', 'session', captcha, 'mount');
 app.static(module.resolve('public'), 'static');
 // aut for paths containing ! and a secure action
 app.basicauth(/(.*)\!(edit|files)(.*)/, config.backend.username, config.backend.password_sha1);

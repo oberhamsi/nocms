@@ -2,7 +2,7 @@
  * @fileoverview JSGI Response Helpers
  */
 
-export('redirect', 'respond', 'error', 'notfound');
+export('redirect', 'respond', 'error', 'notfound', 'badrequest');
 
 function redirect(path) {
    return {

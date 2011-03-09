@@ -19,8 +19,8 @@
 
    <div id="nocms-text">
          <noscript>
-         <h1>NO JAVASCRIPT??</h1>
-         <h1>YOU GOTTA BE KIDDING ME...</h1>
+         <h1>No JavaScript?</h1>
+         This page is about a JavaScript game engine. Please activate your JavaScript.
          </noscript>
 
    </div>
@@ -35,6 +35,8 @@
          <input name="nocms-author" type="text" size="30" placeholder="Your name">
          <br/>
          <textarea name="nocms-text" rows=5 cols=40 placeholder="Your comment"></textarea>
+         <br/>
+         {{{QUESTION}}} <input name="nocms-captcha-answer" type="text" size="4" placeholder="Yes/No">
          <br/>
          <input type="submit" name="post comment" value="post comment"/>
       </form>

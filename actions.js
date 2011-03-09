@@ -3,6 +3,7 @@ var log = require('ringo/logging').getLogger(module.id);
 var {read, write, join, list} = require('fs');
 var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/webapp/fileupload');
 
+var captcha = require('./captcha');
 var config = require('./config');
 var {redirect, respond, notfound} = require('./response');
 // FIXME could easily break without me noticing
@@ -129,7 +130,8 @@ function servePage(request, path) {
    });
    var $page = render('page', {
       PAGE: JSON.stringify(page.serialize()),
-      RECENT: JSON.stringify(recent)
+      RECENT: JSON.stringify(recent),
+      QUESTION: captcha.getQuestion(request)
    });
    return respond($page);
 };

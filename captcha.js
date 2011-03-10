@@ -15,7 +15,7 @@ exports.middleware = function captcha(next, app) {
        * if question is set, it's answer is tested
        */
       // FIXME authorization easy to circument if you know what you need to do (set auth header)
-      if (!req.session.data.isAuthorized && req.method.toLowerCase() == 'post' && req.session.data[Q]) {
+      if (!req.session.data.isAuthorized && req.method.toLowerCase() == 'post') {
          var answer = req.params[A];
          if (!answer || typeof(answer) != 'string') {
             req.session.data[Q] = null;

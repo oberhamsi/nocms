@@ -11,9 +11,6 @@ var A = 'nocms-captcha-answer';
 exports.middleware = function captcha(next, app) {
 
    return function captcha(req) {
-      /**
-       * if question is set, it's answer is tested
-       */
       if (!req.session.data.isAuthorized && req.method.toLowerCase() == 'post') {
          var answer = req.params[A];
          if (!answer || typeof(answer) != 'string') {

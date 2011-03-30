@@ -13,13 +13,9 @@
       <input id="nocms-title" name="nocms-title" type="text" size="50" placeholder="Title"/>
       <br/>
       <textarea id="nocms-text" name="nocms-text" cols=70 rows=30 placeholder="Page text in Markdown"></textarea>
-      <iframe id="nocms-preview" style="height:700px;width:60%;float:right;">
-      </iframe>
 
       <br/>
       <input type="submit" name="save" value="Save & exit" title="Press Ctrl + S to save without exiting."/>
-      &nbsp;&nbsp;&nbsp;
-      <input id="nocms-button-preview" type="submit" name="Update _p_review" value="Update preview" title="Press CTRL + P to update the preview."/>
 
       <h3> Delete comments </h3>
       <div id="nocms-comments">

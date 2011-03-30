@@ -14,17 +14,6 @@ $(document).ready(function() {
    var $comments = $.tmpl($('#nocms-comment-template'), page.comments);
    $('#nocms-comments').append($comments);
 
-   // preview UI
-
-   function updatePreview() {
-      $('#nocms-preview').attr('src', '/' + page.path);
-   }
-   updatePreview();
-   $("#nocms-button-preview").click(function(event) {
-      updatePreview();
-      event.preventDefault();
-   });
-
    // save UI
    $(document).keydown(function(event) {
       var key = event.keyCode || event.which;

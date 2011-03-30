@@ -9,7 +9,7 @@ var {redirect, respond, notfound} = require('./response');
 // FIXME could easily break without me noticing
 var showdown = require('./public/static/lib/showdown');
 
-export('files', 'comment', 'edit', 'servePage', 'serveCanonicalPage');
+export('files', 'comment', 'edit', 'page', 'canonicalPage');
 
 var FILES_PATH = config.files.uploadDirectory;
 var FILES_URL = config.files.baseUrl;
@@ -116,7 +116,7 @@ function edit(request, path) {
 /**
  * Serve a page
  */
-function servePage(request, path) {
+function page(request, path) {
    var page = Page.getByPath(path);
    if (!page) {
       return notfound();
@@ -139,7 +139,7 @@ function servePage(request, path) {
 /**
  * Serve page content in canonical html form
  */
-function serveCanonicalPage(request, path) {
+function canonicalPage(request, path) {
    var page = Page.getByPath(path);
    if (!page) {
       return  notfound();
@@ -151,4 +151,5 @@ function serveCanonicalPage(request, path) {
       TEXT: text
    });
    return respond($page);
-}
+};
+

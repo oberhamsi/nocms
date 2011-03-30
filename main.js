@@ -27,14 +27,14 @@ app.mount('/', function(request) {
       // if search engine request: return canonical html now
       // @see http://www.google.com/support/webmasters/bin/answer.py?hl=en&answer=174992
       if (request.params._escaped_fragment_ !== undefined) {
-         return actions.serveCanonicalPage(request, path);
+         return actions.canonicalPage(request, path);
       }
 
       var action = null;
       if (matches[2] && matches[2].length) {
          action = actions[matches[2]];
       } else {
-         action = actions.servePage;
+         action = actions.page;
       }
       try {
          return action(request, path);

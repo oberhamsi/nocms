@@ -48,5 +48,5 @@ app.mount('/', function(request) {
 
 // Script run from command line
 if (require.main === module) {
-    require('stick/server').main(module.id);
+    require('ringo/httpserver').main(module.id);
 }

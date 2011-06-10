@@ -1,7 +1,7 @@
 var {Page, Comment} = require('./model');
 var log = require('ringo/logging').getLogger(module.id);
 var {read, write, join, list} = require('fs');
-var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/webapp/fileupload');
+var {parseFileUpload, TempFileFactory, isFileUpload} = require('ringo/utils/http');
 
 var captcha = require('./captcha');
 var config = require('./config');
@@ -152,4 +152,3 @@ function canonicalPage(request, path) {
    });
    return respond($page);
 };
-

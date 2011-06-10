@@ -1,4 +1,4 @@
-var Store = require("ringo/storage/sql/store").Store;
+var Store = require("ringo-sqlstore").Store;
 var log = require('ringo/logging').getLogger(module.id);
 var config = require('./config');
 

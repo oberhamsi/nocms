@@ -1,0 +1,29 @@
+{
+    "name": "nocms",
+    "version": "0.3",
+    "description": "Web analytics server",
+    "keywords": ["metrics", "web"],
+    "homepage": "https://github.com/oberhamsi/nocms/",
+    "author": {
+        "name": "Simon Oberhammer",
+        "email": "simon@nekapuzer.at",
+        "web": "http://nekapuzer.at"
+    },
+    "contributors": [],
+    "dependencies": {
+        "ringo-sqlstore": ">=0.1.1",
+    },
+    "repositories": [{
+        "type": "git",
+        "url": "https://github.com/oberhamsi/nocms.git"
+    }],
+    "bugs": "http://github.com/oberhamsi/nocms/issues",
+    "licenses": [{
+        "type": "Apache License Version 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+    }],
+    "engines": {
+        "ringojs": ">= 0.8"
+    },
+    "main": "main.js"
+}

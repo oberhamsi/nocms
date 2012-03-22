@@ -1,67 +1,53 @@
 ## NoCms
 
-Content managment for lazy people.
-
- * Flat pages
-  * flexibel URLs
-  * markdown
- * Comments
+ * Flexibel URLs
+ * Markdown
+ * Easy customization
+ * Comments per page
+ * File upload
 
 ## Install
 
-Requires <http://Ringojs.org> and a MySQL5+ (or other database supported ringo-sqlstore).
+Install nocms and dependancies with [rp](https://github.com/grob/rp):
 
-1) Install stick & ringo-sqlstore:
+    $ rp install nocms
 
-    ringo-admin install ringo/stick
-    ringo-admin install grob/ringo-sqlstore
+A nocms instance needs an empty directory where it will put its configuration file and where you can (optionally) overwrite the default templates:
 
-You might need the MySQL JDBC driver:
+    $ mkdir /var/www/nocms-foo/
+    $ nocms create /var/www/nocms-foo/
 
-  * download: <http://dev.mysql.com/downloads/connector/j/5.0.html>
-  * rename the jar file to 'mysql.jar'
-  * put it into `ringo-sqlstore/jars/` directory
+nocms will ask you for the admin's username and password; the default installation configures your instance with a file-based H2 database, which is good enough for small sites.
 
-2) Create database & user:
+### Optional: different database engine
 
-    create database nocms;
-    CREATE USER 'nocms'@'localhost' identified by 'nocms';
-    GRANT ALL PRIVILEGES ON nocms.* TO 'nocms'@'localhost';
+If you want to use another database, modify `config.data.js` in your instance directory; e.g. this would be the config for a MySQL database:
 
-3) Create upload folder and make writable & readable for Ringo server:
-
-    mkdir public/files
-    chmod 777 public/files
-
-4) Create config. Copy template config and adapt to your setup
-
-    cp config-example.js config.js
-    nano config.js
-
+    exports.store = {
+       "url": "jdbc:mysql://localhost/foo-database",
+       "driver": "com.mysql.jdbc.Driver",
+       "username": "foo-user",
+       "password": "foo-password"
+    };
 
 ## Usage
 
-Start with:
+Launch your instance with:
 
-    ringo main.js
+    $ nocms serve /var/www/nocms-foo/
 
 You will be greated by a 404 at <http://localhost:8080/> because no pages exist yet.
 
-### Edit or create pages
-
-Attach `!edit` to the URL of the page:
+Attach `!edit` to the URL of the page to get to the backend. For example:
 
  * <http://localhost:8080/!edit>
  * <http://localhost:8080/foo/bar/does/not/yet/exist/!edit>
 
-Comments are listed at the buttom of the edit page: mark checkbox of comment do delete them.
+### Keyboard shorcuts
 
-Keyboard shorcuts:
+  * CTRL+s    save
 
-  * CTRL+S save
-  * CTRL+P update preview
-
-### Upload images
+### Upload files
 
 Attach `!files` to any URL
 

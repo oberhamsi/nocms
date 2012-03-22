@@ -1,8 +1,8 @@
 {
     "name": "nocms",
-    "version": "0.3",
-    "description": "Web analytics server",
-    "keywords": ["metrics", "web"],
+    "version": "0.1",
+    "description": "Content Managment System",
+    "keywords": ["cms", "web"],
     "homepage": "https://github.com/oberhamsi/nocms/",
     "author": {
         "name": "Simon Oberhammer",

@@ -1,5 +1,5 @@
 exports.store = {
-   "url": "jdbc:mysql://localhost/foo-database/",
+   "url": "jdbc:mysql://localhost/foo-database",
    "driver": "com.mysql.jdbc.Driver",
    "username": "foo-user",
    "password": "foo-password"
@@ -11,6 +11,6 @@ exports.backend = {
 };
 
 exports.files = {
-   "uploadDirectory": getResource('./public/files'),
+   "uploadDirectory": getResource('./public/upload'),
    "baseUrl": "files"
 };

@@ -1,0 +1,14 @@
+exports.store = {
+   "url": "jdbc:h2:file:{{{H2DB}}}",
+   "driver": "org.h2.Driver"
+};
+
+exports.backend = {
+   "username": "{{{USERNAME}}}",
+   "password_sha1": "{{{PASSWORD}}}"
+};
+
+exports.files = {
+   "uploadDirectory": getResource('./public/upload'),
+   "baseUrl": "files"
+};
